@@ -2,7 +2,7 @@
 
 dockerfile {
     dockerPush = true
-    dockerRepos = ['confluentinc/kafkacat',]
+    dockerRepos = ['confluentinc/kafkacat-image',]
     mvnPhase = 'package'
     mvnSkipDeploy = true
     nodeLabel = 'docker-oraclejdk8-compose'
