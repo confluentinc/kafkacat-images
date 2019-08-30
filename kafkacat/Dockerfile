@@ -19,6 +19,9 @@ RUN echo "Building kafkacat ....." \
 
 FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 
+ARG PROJECT_VERSION
+ARG ARTIFACT_ID
+
 # Make sure you use an appropriate contact address.
 MAINTAINER partner-support@confluent.io
 LABEL io.confluent.docker=true
