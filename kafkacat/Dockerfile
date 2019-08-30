@@ -1,5 +1,7 @@
 ARG DOCKER_UPSTREAM_REGISTRY
 ARG DOCKER_UPSTREAM_TAG=latest
+ARG PROJECT_VERSION
+ARG ARTIFACT_ID
 
 FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 
@@ -18,9 +20,6 @@ RUN echo "Building kafkacat ....." \
     && make
 
 FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
-
-ARG PROJECT_VERSION
-ARG ARTIFACT_ID
 
 # Make sure you use an appropriate contact address.
 MAINTAINER partner-support@confluent.io
