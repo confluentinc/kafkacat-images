@@ -2,12 +2,12 @@
 
 dockerfile {
     dockerPush = true
-    dockerRepos = ['confluentinc/kafkacat',]
+    dockerRepos = ['confluentinc/cp-kafkacat',]
     mvnPhase = 'package'
     mvnSkipDeploy = true
-    nodeLabel = 'docker-oraclejdk8-eli-compose'
-    slackChannel = 'tools' //TODO: change to correct team
-    upstreamProjects = [] //TODO: after roll out, this will be the packaging job
+    nodeLabel = 'docker-oraclejdk8-compose-swarm'
+    slackChannel = 'tools-notifications' //TODO: change to correct team
+    upstreamProjects = [] //TODO: after roll out update
     dockerPullDeps = ['confluentinc/cp-base-new']
     usePackages = true
 }
