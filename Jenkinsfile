@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 dockerfile {
-    dockerPush = true
+    dockerPush = false
     dockerRepos = ['confluentinc/cp-kafkacat',]
     mvnPhase = 'package'
     mvnSkipDeploy = true
