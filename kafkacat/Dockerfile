@@ -23,7 +23,7 @@ FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 WORKDIR /build
 
 ENV VERSION=1.3.1-1
-ENV BUILD_PACKAGES="build-essential cmake python git curl zlib1g-dev libsasl2-dev libssl-dev"
+ENV BUILD_PACKAGES="which git cmake gcc-c++ zlib-devel openldap-devel"
 
 RUN echo "Building kafkacat ....." \
     && yum -q -y update \
@@ -52,11 +52,11 @@ RUN yum -q -y update \
     && yum -q -y update \
     && yum install -y \
         openssl \
-        libssl1.1 \
-        libsasl2-2 \
-        libsasl2-modules-gssapi-mit \
-        krb5-user \
-        krb5-config \
+        openssl-devel \
+        openldap-devel \
+        krb5-workstation \
+        krb5-libs \
+        krb5-devel \
         ca-certificates \
     && echo "===> clean up ..."  \
     && yum clean all \
