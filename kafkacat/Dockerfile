@@ -23,7 +23,7 @@ FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 WORKDIR /build
 
 ENV VERSION=1.3.1-1
-ENV BUILD_PACKAGES="which git cmake gcc-c++ zlib-devel openldap-devel"
+ENV BUILD_PACKAGES="which git cmake gcc-c++ zlib-devel openldap-devel cyrus-sasl-devel openssl-devel"
 
 RUN echo "Building kafkacat ....." \
     && yum -q -y update \
@@ -47,13 +47,9 @@ LABEL io.confluent.docker.build.number=$BUILD_NUMBER
 
 COPY --from=0 /build/kafkacat/kafkacat /usr/local/bin/
 
-RUN yum -q -y update \
-    && echo "Installing runtime dependencies for SSL and SASL support ...." \
+RUN echo "Installing runtime dependencies for SSL and SASL support ...." \
     && yum -q -y update \
     && yum install -y \
-        openssl \
-        openssl-devel \
-        openldap-devel \
         krb5-workstation \
         krb5-libs \
         krb5-devel \
@@ -61,5 +57,7 @@ RUN yum -q -y update \
     && echo "===> clean up ..."  \
     && yum clean all \
     && rm -rf /tmp/*
+
+RUN kafkacat -V
 
 CMD ["kafkacat"]
