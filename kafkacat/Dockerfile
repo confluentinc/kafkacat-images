@@ -22,12 +22,13 @@ FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 
 WORKDIR /build
 
-ENV VERSION=1.3.1-1
-ENV BUILD_PACKAGES="build-essential cmake python git curl zlib1g-dev libsasl2-dev libssl-dev"
+ENV VERSION=1.5.0-1
+ENV BUILD_PACKAGES="which git cmake gcc-c++ zlib-devel openldap-devel cyrus-sasl-devel openssl-devel curl-devel"
 
 RUN echo "Building kafkacat ....." \
-    && apt-get update -y \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y $BUILD_PACKAGES \
+    && yum -q -y update \
+    && yum -q install -y $BUILD_PACKAGES \
+    && yum clean all \
     && git clone https://github.com/edenhill/kafkacat \
     && cd kafkacat \
     && git checkout tags/debian/$VERSION \
@@ -37,7 +38,7 @@ RUN echo "Building kafkacat ....." \
 FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 
 # Make sure you use an appropriate contact address.
-MAINTAINER partner-support@confluent.io
+LABEL maintainer="partner-support@confluent.io"
 LABEL io.confluent.docker=true
 ARG COMMIT_ID=unknown
 LABEL io.confluent.docker.git.id=$COMMIT_ID
@@ -46,16 +47,13 @@ LABEL io.confluent.docker.build.number=$BUILD_NUMBER
 
 COPY --from=0 /build/kafkacat/kafkacat /usr/local/bin/
 
-RUN apt-get update -y \
-    && echo "Installing runtime dependencies for SSL and SASL support ...." \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        openssl \
-        libssl1.1 \
-        libsasl2-2 \
-        libsasl2-modules-gssapi-mit \
-        krb5-user \
-        krb5-config \
+RUN echo "Installing runtime dependencies for SSL and SASL support ...." \
+    && yum -q -y update \
         ca-certificates \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && echo "===> clean up ..."  \
+    && yum clean all \
+    && rm -rf /tmp/*
+
+RUN kafkacat -V
 
 CMD ["kafkacat"]
