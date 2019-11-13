@@ -13,12 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DOCKER_UPSTREAM_REGISTRY
-ARG DOCKER_UPSTREAM_TAG=latest
-ARG PROJECT_VERSION
-ARG ARTIFACT_ID
-
-FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
+FROM debian:stretch-slim
 
 WORKDIR /build
 
@@ -34,7 +29,7 @@ RUN echo "Building kafkacat ....." \
     && ./bootstrap.sh \
     && make
 
-FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
+FROM debian:stretch-slim
 
 # Make sure you use an appropriate contact address.
 MAINTAINER partner-support@confluent.io
