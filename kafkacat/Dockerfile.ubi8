@@ -30,9 +30,10 @@ USER root
 
 RUN echo "Building kafkacat ....." \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
-    && yum -y update \
-    && yum install -y $BUILD_PACKAGES \
-    && yum clean all \
+    && dnf -y update \
+    && dnf install -y $BUILD_PACKAGES \
+    && dnf install -y https://confluent-packaging-tools.s3-us-west-2.amazonaws.com/libzstd-devel-1.4.2-2.el8.x86_64.rpm \
+    && dnf clean all \
     && git clone https://github.com/edenhill/kafkacat \
     && cd kafkacat \
     && git checkout tags/debian/$VERSION \
@@ -59,10 +60,10 @@ COPY --from=0 /build/kafkacat/kafkacat /usr/local/bin/
 
 RUN echo "Installing runtime dependencies for SSL and SASL support ...." \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
-    && yum -y update \
-    && yum install -y ca-certificates libzstd \
+    && dnf -y update \
+    && dnf install -y ca-certificates libzstd \
     && echo "===> clean up ..."  \
-    && yum clean all \
+    && dnf clean all \
     && rm -rf /tmp/*
 
 USER appuser
