@@ -32,7 +32,6 @@ RUN echo "Building kafkacat ....." \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
     && dnf -y update \
     && dnf install -y $BUILD_PACKAGES \
-    && dnf install -y https://confluent-packaging-tools.s3-us-west-2.amazonaws.com/libzstd-devel-1.4.2-2.el8.x86_64.rpm \
     && dnf clean all \
     && git clone https://github.com/edenhill/kafkacat \
     && cd kafkacat \
