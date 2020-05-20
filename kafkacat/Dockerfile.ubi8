@@ -35,7 +35,7 @@ RUN echo "Building kafkacat ....." \
     && dnf clean all \
     && git clone https://github.com/edenhill/kafkacat \
     && cd kafkacat \
-    && git checkout tags/debian/$VERSION \
+    && git checkout origin/master \
     && ./bootstrap.sh \
     && make
 
