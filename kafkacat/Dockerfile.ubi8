@@ -33,7 +33,7 @@ RUN echo "Building kafkacat ....." \
     && dnf -y update \
     && dnf install -y $BUILD_PACKAGES \
     && dnf clean all \
-    && git clone https://github.com/edenhill/kafkacat \
+    && git clone https://github.com/andrewegel/kafkacat \
     && cd kafkacat \
     && git checkout origin/master \
     && ./bootstrap.sh \
