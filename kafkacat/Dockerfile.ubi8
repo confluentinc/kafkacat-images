@@ -17,7 +17,7 @@ ARG PROJECT_VERSION
 ARG ARTIFACT_ID
 ARG GIT_COMMIT
 
-FROM FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 
 WORKDIR /build
 
