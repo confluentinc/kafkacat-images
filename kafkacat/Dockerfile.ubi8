@@ -27,6 +27,7 @@ ENV BUILD_PACKAGES="which git make cmake gcc-c++ zlib-devel curl curl-devel open
 USER root
 
 RUN echo "Building kafkacat ....." \
+    && microdnf install dnf \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
     && dnf -y update \
     && dnf install -y $BUILD_PACKAGES \
