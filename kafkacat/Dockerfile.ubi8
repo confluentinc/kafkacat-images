@@ -12,12 +12,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+ARG DOCKER_UPSTREAM_REGISTRY
+ARG DOCKER_UPSTREAM_TAG=ubi8-latest
 ARG PROJECT_VERSION
 ARG ARTIFACT_ID
 ARG GIT_COMMIT
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 
 WORKDIR /build
 
@@ -39,7 +40,7 @@ RUN echo "Building kafkacat ....." \
     && make \
     && ldd kafkacat
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 
 LABEL maintainer="partner-support@confluent.io"
 LABEL vendor="Confluent"
