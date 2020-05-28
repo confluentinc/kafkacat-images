@@ -58,6 +58,7 @@ USER root
 COPY --from=0 /build/kafkacat/kafkacat /usr/local/bin/
 
 RUN echo "Installing runtime dependencies for SSL and SASL support ...." \
+    && microdnf install dnf \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
     && dnf -y update \
     && dnf install -y ca-certificates \
