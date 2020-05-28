@@ -24,7 +24,7 @@ FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 WORKDIR /build
 
 ENV VERSION=1.5.0-1
-ENV BUILD_PACKAGES="which git make cmake gcc-c++ zlib-devel curl curl-devel openssl-devel openldap-devel cyrus-sasl-devel pkgconfig lz4-devel wget tar"
+ENV BUILD_PACKAGES="which git make cmake gcc-c++ zlib-devel curl curl-devel openssl-devel cyrus-sasl-devel pkgconfig lz4-devel wget tar"
 
 USER root
 
@@ -33,11 +33,12 @@ RUN echo "Building kafkacat ....." \
     && dnf -y update \
     && dnf install -y $BUILD_PACKAGES \
     && dnf clean all \
-    && git clone https://github.com/andrewegel/kafkacat \
+    && git clone https://github.com/edenhill/kafkacat \
     && cd kafkacat \
     && git checkout origin/master \
     && ./bootstrap.sh \
-    && make
+    && make \
+    && ldd kafkacat
 
 FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 
@@ -60,7 +61,7 @@ COPY --from=0 /build/kafkacat/kafkacat /usr/local/bin/
 RUN echo "Installing runtime dependencies for SSL and SASL support ...." \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
     && dnf -y update \
-    && dnf install -y ca-certificates libzstd \
+    && dnf install -y ca-certificates \
     && echo "===> clean up ..."  \
     && dnf clean all \
     && rm -rf /tmp/*
