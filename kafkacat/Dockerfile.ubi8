@@ -39,7 +39,7 @@ RUN echo "Building kafkacat ....." \
     && make \
     && ldd kafkacat
 
-FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 
 LABEL maintainer="partner-support@confluent.io"
 LABEL vendor="Confluent"
