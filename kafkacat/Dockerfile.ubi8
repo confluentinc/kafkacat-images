@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 ARG DOCKER_UPSTREAM_REGISTRY
 ARG DOCKER_UPSTREAM_TAG=ubi8-latest
 ARG PROJECT_VERSION
@@ -28,7 +29,6 @@ ENV BUILD_PACKAGES="which git make cmake gcc-c++ zlib-devel curl curl-devel open
 USER root
 
 RUN echo "Building kafkacat ....." \
-    && microdnf install dnf \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
     && dnf -y update \
     && dnf install -y $BUILD_PACKAGES \
