@@ -24,20 +24,21 @@ FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 WORKDIR /build
 
 ENV VERSION=1.5.0-1
-ENV BUILD_PACKAGES="which git make cmake gcc-c++ zlib-devel curl curl-devel openssl-devel openldap-devel cyrus-sasl-devel pkgconfig lz4-devel libzstd-devel" 
+ENV BUILD_PACKAGES="which git make cmake gcc-c++ zlib-devel curl curl-devel openssl-devel cyrus-sasl-devel pkgconfig lz4-devel wget tar findutils"
 
 USER root
 
 RUN echo "Building kafkacat ....." \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
-    && yum -q -y update \
-    && yum -q install -y $BUILD_PACKAGES \
-    && yum clean all \
+    && dnf -y update \
+    && dnf install -y $BUILD_PACKAGES \
+    && dnf clean all \
     && git clone https://github.com/edenhill/kafkacat \
     && cd kafkacat \
-    && git checkout tags/debian/$VERSION \
+    && git checkout origin/master \
     && ./bootstrap.sh \
-    && make
+    && make \
+    && ldd kafkacat
 
 FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 
@@ -58,11 +59,12 @@ USER root
 COPY --from=0 /build/kafkacat/kafkacat /usr/local/bin/
 
 RUN echo "Installing runtime dependencies for SSL and SASL support ...." \
+    && microdnf install dnf \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
-    && yum -q -y update \
-    && yum install -y ca-certificates libzstd \
+    && dnf -y update \
+    && dnf install -y ca-certificates \
     && echo "===> clean up ..."  \
-    && yum clean all \
+    && dnf clean all \
     && rm -rf /tmp/*
 
 USER appuser
