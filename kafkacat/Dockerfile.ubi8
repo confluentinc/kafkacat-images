@@ -36,7 +36,7 @@ RUN echo "Building kafkacat ....." \
     && git clone https://github.com/edenhill/kafkacat \
     && cd kafkacat \
     && git checkout origin/master \
-    && (./bootstrap.sh || cat tmp-bootstrap/librdkafka/config.log) \
+    && (./bootstrap.sh || (cat tmp-bootstrap/librdkafka/config.log; find tmp-bootstrap/librdkafka)) \
     && make \
     && ldd kafkacat
 
