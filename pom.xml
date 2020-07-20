@@ -22,7 +22,7 @@
     <parent>
         <groupId>io.confluent</groupId>
         <artifactId>common-docker</artifactId>
-        <version>6.1.0-SNAPSHOT</version>
+        <version>[6.1.0-0, 6.1.1-0)</version>
     </parent>
 
     <groupId>io.confluent.kafkacat-images</groupId>
@@ -30,7 +30,7 @@
     <packaging>pom</packaging>
     <name>Kafkacat Docker Images</name>
     <description>Build files for Confluent's Kafkacat Docker images</description>
-    <version>6.1.0-SNAPSHOT</version>
+    <version>6.1.0-0</version>
 
     <modules>
         <module>kafkacat</module>
