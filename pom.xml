@@ -38,6 +38,6 @@
 
     <properties>
         <component.name>kafkacat</component.name>
-        <io.confluent.kafkacat.version>6.1.0-0</io.confluent.kafkacat.version>
+        <io.confluent.kafkacat-images.version>6.1.0-0</io.confluent.kafkacat-images.version>
     </properties>
 </project>
