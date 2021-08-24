@@ -37,7 +37,7 @@ RUN echo "Building kafkacat ....." \
     && git checkout $VERSION \
     && ./bootstrap.sh \
     && make \
-    && ldd kafkacat
+    && ldd kcat
 
 FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 
@@ -55,7 +55,7 @@ LABEL io.confluent.docker.git.repo="confluentinc/kafkacat-images"
 
 USER root
 
-COPY --from=0 /build/kafkacat/kafkacat /usr/local/bin/
+COPY --from=0 /build/kafkacat/kcat /usr/local/bin/
 
 RUN echo "Installing runtime dependencies for SSL and SASL support ...." \
     && microdnf install dnf \
@@ -67,6 +67,6 @@ RUN echo "Installing runtime dependencies for SSL and SASL support ...." \
 
 USER appuser
 
-RUN kafkacat -V
+RUN kcat -V
 
-CMD ["kafkacat"]
+CMD ["kcat"]
