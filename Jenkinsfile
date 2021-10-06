@@ -14,4 +14,5 @@ dockerfile {
     cpImages = true
     osTypes = ['ubi8']
     nanoVersion = true
+    nodeLabel = 'docker-debian-10-jdk8-compose-test'
 }
