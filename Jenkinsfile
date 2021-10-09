@@ -5,7 +5,7 @@ dockerfile {
     dockerRepos = ['confluentinc/cp-kafkacat',]
     mvnPhase = 'package'
     mvnSkipDeploy = true
-    nodeLabel = 'docker-oraclejdk8-compose-swarm'
+    nodeLabel = 'docker-debian-jdk8-compose'
     slackChannel = 'clients-eng'
     upstreamProjects = []
     dockerPullDeps = ['confluentinc/cp-base-new']
