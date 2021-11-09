@@ -13,4 +13,5 @@ dockerfile {
     cron = '' // Disable the cron because this job requires parameters
     cpImages = true
     osTypes = ['ubi8']
+    disableConcurrentBuilds = true
 }
