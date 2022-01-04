@@ -1,6 +1,6 @@
 # Docker images for Kafkacat
 
-This repo provides build files for [Kafkacat](https://docs.confluent.io/current/app-development/kafkacat-usage.html) Docker images.
+This repo provides build files for [kcat](https://docs.confluent.io/current/app-development/kafkacat-usage.html) Docker images.
 
 ## Properties
 

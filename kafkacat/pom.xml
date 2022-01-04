@@ -27,8 +27,8 @@
     </parent>
 
     <groupId>io.confluent.kafkacat-images</groupId>
-    <artifactId>cp-kafkacat</artifactId>
-    <name>Kafkacat Docker Image</name>
+    <artifactId>cp-kcat</artifactId>
+    <name>kcat Docker Image</name>
 
     <properties>
         <docker.skip-build>false</docker.skip-build>

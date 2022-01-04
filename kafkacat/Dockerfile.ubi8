@@ -23,21 +23,21 @@ FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 
 WORKDIR /build
 
-ENV VERSION=1.5.0
+ENV VERSION=1.7.0
 ENV BUILD_PACKAGES="which git make cmake gcc-c++ zlib-devel curl curl-devel openssl-devel cyrus-sasl-devel pkgconfig lz4-devel wget tar findutils"
 
 USER root
 
-RUN echo "Building kafkacat ....." \
+RUN echo "Building kcat ....." \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
     && dnf install -y $BUILD_PACKAGES \
     && dnf clean all \
-    && git clone https://github.com/edenhill/kafkacat \
-    && cd kafkacat \
+    && git clone https://github.com/edenhill/kcat \
+    && cd kcat \
     && git checkout $VERSION \
     && ./bootstrap.sh \
     && make \
-    && ldd kafkacat
+    && ldd kcat
 
 FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
 
@@ -46,7 +46,7 @@ LABEL vendor="Confluent"
 LABEL version=$GIT_COMMIT
 LABEL release=$PROJECT_VERSION
 LABEL name=$ARTIFACT_ID
-LABEL summary="kafkacat is a command line utility that you can use to test and debug Apache Kafka® deployments. You can use kafkacat to produce, consume, and list topic and partition information for Kafka. Described as “netcat for Kafka”, it is a swiss-army knife of tools for inspecting and creating data in Kafka."
+LABEL summary="kcat is a command line utility that you can use to test and debug Apache Kafka® deployments. You can use kcat to produce, consume, and list topic and partition information for Kafka. Described as “netcat for Kafka”, it is a swiss-army knife of tools for inspecting and creating data in Kafka."
 LABEL io.confluent.docker=true
 LABEL io.confluent.docker.git.id=$GIT_COMMIT
 ARG BUILD_NUMBER=-1
@@ -55,9 +55,10 @@ LABEL io.confluent.docker.git.repo="confluentinc/kafkacat-images"
 
 USER root
 
-COPY --from=0 /build/kafkacat/kafkacat /usr/local/bin/
+COPY --from=0 /build/kcat/kcat /usr/local/bin/
 
-RUN echo "Installing runtime dependencies for SSL and SASL support ...." \
+RUN ln -s /usr/local/bin/kcat /usr/local/bin/kafkacat \
+    && echo "Installing runtime dependencies for SSL and SASL support ...." \
     && microdnf install dnf \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
     && dnf install -y ca-certificates \
@@ -67,6 +68,6 @@ RUN echo "Installing runtime dependencies for SSL and SASL support ...." \
 
 USER appuser
 
-RUN kafkacat -V
+RUN kcat -V
 
-CMD ["kafkacat"]
+CMD ["kcat"]
