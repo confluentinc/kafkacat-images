@@ -70,4 +70,4 @@ USER appuser
 
 RUN kcat -V
 
-CMD ["kcat"]
+ENTRYPOINT ["kcat"]
