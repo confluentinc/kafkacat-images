@@ -33,7 +33,7 @@
     <version>7.2.0-0</version>
 
     <modules>
-        <module>kafkacat</module>
+        <module>kcat</module>
     </modules>
 
     <properties>
