@@ -2,7 +2,7 @@
 
 dockerfile {
     dockerPush = true
-    dockerRepos = ['confluentinc/cp-kafkacat',]
+    dockerRepos = ['confluentinc/cp-kcat',]
     mvnPhase = 'package'
     mvnSkipDeploy = true
     nodeLabel = 'docker-debian-jdk8-compose'
