@@ -1,6 +1,1 @@
-# See go/codeowners - automatically generated for confluentinc/kafkacat-images:
-*	@ConfluentJenkins
-*	@SamehTawfik
-*	@andrewegel
-*	@javabrett
-*	@jkao97
+*	@confluentinc/clients
