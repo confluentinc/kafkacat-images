@@ -14,4 +14,5 @@ dockerfile {
     cpImages = true
     osTypes = ['ubi8']
     nanoVersion = true
+    buildArm = true
 }
