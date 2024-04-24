@@ -8,7 +8,15 @@ github:
   repo_name: confluentinc/kafkacat-images
 semaphore:
   enable: true
-  pipeline_enable: false
+  pipeline_type: cp-dockerfile
+  docker_repos: ["confluentinc/cp-kcat",]
+  maven_phase: 'package'
+  maven_skip_deploy: true
+  use_packages: true
+  cp_images: true
+  os_types: ['ubi8']
+  nano_version: true
+  build_arm: true
+  sign_images: true
 codeowners:
   enable: true
-
