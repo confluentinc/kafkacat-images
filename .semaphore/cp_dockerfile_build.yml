@@ -66,7 +66,7 @@ global_job_config:
           elif [[ $IS_PREVIEW ]]; then
               export MAVEN_PACKAGES_URL="https://s3.us-west-2.amazonaws.com/jenkins-confluent-packages-alpha-maven/$BRANCH_NAME/$PACKAGING_BUILD_NUMBER/maven"
           elif [[ $IS_RC ]]; then
-              export MAVEN_PACKAGES_URL="https://s3.us-west-2.amazonaws.com/staging-confluent-packages-maven/v$BRANCH_NAME/maven"
+              export MAVEN_PACKAGES_URL="https://s3.us-west-2.amazonaws.com/staging-confluent-packages-maven-654654529379-us-west-2/v$BRANCH_NAME/maven"
               if [[ $PACKAGES_MAVEN_URL ]]; then
                   export MAVEN_PACKAGES_URL=$PACKAGES_MAVEN_URL
               fi
@@ -81,7 +81,7 @@ global_job_config:
       - export DOCKER_UPSTREAM_REGISTRY=$DOCKER_PROD_REGISTRY
       - export LATEST_TAG=$BRANCH_TAG-latest
       - export DOCKER_UPSTREAM_TAG="$LATEST_TAG"
-      - export DOCKER_REPOS="confluentinc/cp-kafkacat"
+      - export DOCKER_REPOS="confluentinc/cp-kcat"
       - export DOCKER_DEV_TAG="dev-$BRANCH_TAG-$BUILD_NUMBER"
       - export AMD_ARCH=.amd64
       - export ARM_ARCH=.arm64
@@ -117,19 +117,19 @@ blocks:
             - . publish-test-results
             - artifact push workflow target/test-results
             - artifact push workflow target --destination target-AMD
-  - name: Deploy AMD confluentinc/cp-kafkacat
+  - name: Deploy AMD confluentinc/cp-kcat
     dependencies: ["Build, Test, & Scan AMD"]
     run:
       when: "branch = 'master' or branch =~ '^[0-9]+\\.[0-9]+\\.x$' or branch =~ '^[0-9]+\\.[0-9]+\\.[0-9]+(-cp[0-9]+)?-rc[0-9]+$'"
     task:
       jobs:
-        - name: Deploy AMD confluentinc/cp-kafkacat ubi8
+        - name: Deploy AMD confluentinc/cp-kcat ubi8
           commands:
             - export OS_TAG="-ubi8"
-            - export PROD_IMAGE_NAME=${DOCKER_PROD_REGISTRY}confluentinc/cp-kafkacat
+            - export PROD_IMAGE_NAME=${DOCKER_PROD_REGISTRY}confluentinc/cp-kcat
             - export GIT_COMMIT_TAG=$GIT_COMMIT$OS_TAG$AMD_ARCH
             - export BRANCH_BUILD_TAG=$BRANCH_TAG-$BUILD_NUMBER$OS_TAG$AMD_ARCH
-            - export DEV_IMAGE_FULL=${DOCKER_DEV_REGISTRY}confluentinc/cp-kafkacat:$DOCKER_DEV_TAG$OS_TAG$AMD_ARCH
+            - export DEV_IMAGE_FULL=${DOCKER_DEV_REGISTRY}confluentinc/cp-kcat:$DOCKER_DEV_TAG$OS_TAG$AMD_ARCH
             - docker pull $DEV_IMAGE_FULL
             - docker tag $DEV_IMAGE_FULL $PROD_IMAGE_NAME:$GIT_COMMIT_TAG
             - docker tag $DEV_IMAGE_FULL $PROD_IMAGE_NAME:$BRANCH_BUILD_TAG
@@ -170,7 +170,7 @@ blocks:
             - . publish-test-results
             - artifact push workflow target/test-results
             - artifact push workflow target --destination target-ARM
-  - name: Deploy ARM confluentinc/cp-kafkacat
+  - name: Deploy ARM confluentinc/cp-kcat
     dependencies: ["Build & Test ARM"]
     run:
       when: "branch = 'master' or branch =~ '^[0-9]+\\.[0-9]+\\.x$' or branch =~ '^[0-9]+\\.[0-9]+\\.[0-9]+(-cp[0-9]+)?-rc[0-9]+$'"
@@ -179,13 +179,13 @@ blocks:
         machine:
           type: s1-prod-ubuntu20-04-arm64-1
       jobs:
-        - name: Deploy ARM confluentinc/cp-kafkacat ubi8
+        - name: Deploy ARM confluentinc/cp-kcat ubi8
           commands:
             - export OS_TAG="-ubi8"
-            - export PROD_IMAGE_NAME=${DOCKER_PROD_REGISTRY}confluentinc/cp-kafkacat
+            - export PROD_IMAGE_NAME=${DOCKER_PROD_REGISTRY}confluentinc/cp-kcat
             - export GIT_COMMIT_TAG=$GIT_COMMIT$OS_TAG$ARM_ARCH
             - export BRANCH_BUILD_TAG=$BRANCH_TAG-$BUILD_NUMBER$OS_TAG$ARM_ARCH
-            - export DEV_IMAGE_FULL=${DOCKER_DEV_REGISTRY}confluentinc/cp-kafkacat:$DOCKER_DEV_TAG$OS_TAG$ARM_ARCH
+            - export DEV_IMAGE_FULL=${DOCKER_DEV_REGISTRY}confluentinc/cp-kcat:$DOCKER_DEV_TAG$OS_TAG$ARM_ARCH
             - docker pull $DEV_IMAGE_FULL
             - docker tag $DEV_IMAGE_FULL $PROD_IMAGE_NAME:$GIT_COMMIT_TAG
             - docker tag $DEV_IMAGE_FULL $PROD_IMAGE_NAME:$BRANCH_BUILD_TAG
@@ -198,7 +198,7 @@ blocks:
             - docker push $PROD_IMAGE_NAME:$PACKAGE_TAG
             - sign-images $PROD_IMAGE_NAME:$PACKAGE_TAG
   - name: Create Manifest and Maven Deploy
-    dependencies: ["Deploy AMD confluentinc/cp-kafkacat", "Deploy ARM confluentinc/cp-kafkacat"]
+    dependencies: ["Deploy AMD confluentinc/cp-kcat", "Deploy ARM confluentinc/cp-kcat"]
     run:
       when: "branch = 'master' or branch =~ '^[0-9]+\\.[0-9]+\\.x$' or branch =~ '^[0-9]+\\.[0-9]+\\.[0-9]+(-cp[0-9]+)?-rc[0-9]+$'"
     task:
