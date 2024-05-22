@@ -18,6 +18,7 @@ semaphore:
   nano_version: true
   build_arm: true
   sign_images: true
+  push_latest: true
   tasks:
     - name: cp-dockerfile-build
       branch: master
