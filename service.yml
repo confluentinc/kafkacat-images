@@ -67,3 +67,4 @@ code_artifact:
   enable: true
   package_paths:
     - maven-snapshots/maven/io.confluent.kafkacat-images/kafkacat-images-parent
+    - maven-snapshots/maven/io.confluent.kafkacat-images/cp-*
