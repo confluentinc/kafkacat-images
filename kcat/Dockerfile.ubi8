@@ -19,7 +19,7 @@ ARG PROJECT_VERSION
 ARG ARTIFACT_ID
 ARG GIT_COMMIT
 
-FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 
 WORKDIR /build
 
@@ -29,17 +29,18 @@ ENV BUILD_PACKAGES="which git make cmake gcc-c++ zlib-devel curl curl-devel open
 USER root
 
 RUN echo "Building kcat ....." \
+    && microdnf install -y dnf \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
     && dnf install -y $BUILD_PACKAGES \
     && dnf clean all \
-    && git clone https://github.com/edenhill/kcat \
+    && git clone --depth 1 --branch $VERSION https://github.com/edenhill/kcat \
     && cd kcat \
-    && git checkout $VERSION \
     && ./bootstrap.sh \
     && make \
+    && strip kcat \
     && ldd kcat
 
-FROM ${DOCKER_UPSTREAM_REGISTRY}confluentinc/cp-base-new:${DOCKER_UPSTREAM_TAG}
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 
 LABEL maintainer="partner-support@confluent.io"
 LABEL vendor="Confluent"
