@@ -30,7 +30,7 @@
     <packaging>pom</packaging>
     <name>Kafkacat Docker Images</name>
     <description>Build files for Confluent's Kafkacat Docker images</description>
-    <version>8.1.0</version>
+    <version>8.1.0-59</version>
 
     <modules>
         <module>kcat</module>
@@ -38,6 +38,6 @@
 
     <properties>
         <component.name>kafkacat</component.name>
-        <io.confluent.kafkacat-images.version>8.1.0</io.confluent.kafkacat-images.version>
+        <io.confluent.kafkacat-images.version>8.1.0-59</io.confluent.kafkacat-images.version>
     </properties>
 </project>
