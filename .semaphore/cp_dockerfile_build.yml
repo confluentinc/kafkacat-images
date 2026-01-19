@@ -113,7 +113,7 @@ blocks:
       jobs:
         - name: Validation
           commands:
-            - . sem-pint -c
+            - ci-sem-pint -c
   - name: Build, Test, & Scan AMD
     dependencies: ["Validation"]
     run:
