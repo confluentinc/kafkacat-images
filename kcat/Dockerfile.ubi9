@@ -14,23 +14,23 @@
 # limitations under the License.
 
 ARG DOCKER_UPSTREAM_REGISTRY
-ARG DOCKER_UPSTREAM_TAG=ubi8-latest
+ARG DOCKER_UPSTREAM_TAG=ubi9-latest
 ARG PROJECT_VERSION
 ARG ARTIFACT_ID
 ARG GIT_COMMIT
 ARG UBI_MINIMAL_VERSION="latest"
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal:${UBI_MINIMAL_VERSION}
+FROM registry.access.redhat.com/ubi9/ubi-minimal:${UBI_MINIMAL_VERSION}
 
 WORKDIR /build
 
 ENV VERSION=1.7.0
-ENV BUILD_PACKAGES="which git make cmake gcc-c++ zlib-devel curl curl-devel openssl-devel cyrus-sasl-devel pkgconfig lz4-devel wget tar findutils shadow-utils"
+ENV BUILD_PACKAGES="which git make cmake gcc-c++ zlib-devel curl-devel openssl-devel cyrus-sasl-devel krb5-devel pkgconfig lz4-devel wget tar findutils shadow-utils"
 
 USER root
 
 RUN echo "Building kcat ....." \
-    && microdnf install dnf \
+    && microdnf install -y dnf \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
     && dnf install -y $BUILD_PACKAGES \
     && dnf clean all \
@@ -41,7 +41,7 @@ RUN echo "Building kcat ....." \
     && make \
     && ldd kcat
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal:${UBI_MINIMAL_VERSION}
+FROM registry.access.redhat.com/ubi9/ubi-minimal:${UBI_MINIMAL_VERSION}
 
 LABEL maintainer="partner-support@confluent.io"
 LABEL vendor="Confluent"
@@ -61,7 +61,7 @@ COPY --from=0 /build/kcat/kcat /usr/local/bin/
 
 RUN ln -s /usr/local/bin/kcat /usr/local/bin/kafkacat \
     && echo "Installing runtime dependencies for SSL and SASL support ...." \
-    && microdnf install dnf \
+    && microdnf install -y dnf \
     && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
     && dnf install -y ca-certificates \
     && echo "===> clean up ..."  \

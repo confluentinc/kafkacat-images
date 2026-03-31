@@ -63,12 +63,12 @@ blocks:
     dependencies: []
     task:
       jobs:
-        - name: Promote confluentinc/cp-kcat ubi8 AMD
+        - name: Promote confluentinc/cp-kcat ubi9 AMD
           env_vars:
             - name: DOCKER_IMAGE
               value: confluentinc/cp-kcat
           commands:
-            - export OS_TYPE="ubi8"
+            - export OS_TYPE="ubi9"
             - export DOCKER_REPO="confluentinc/cp-kcat"
             - if [[ ! "$OS_TYPE" ]]; then export OS_TAG=""; elif [[ "$OS_TYPE" =~ $PROMOTE_OS_TYPE* ]]; then export OS_TAG="-$OS_TYPE"; fi
             - export INTERNAL_IMAGE_TAG="$BRANCH_TAG-$PACKAGING_BUILD_NUMBER$OS_TAG$AMD_ARCH"
@@ -98,12 +98,12 @@ blocks:
     dependencies: []
     task:
       jobs:
-        - name: Promote confluentinc/cp-kcat ubi8 ARM
+        - name: Promote confluentinc/cp-kcat ubi9 ARM
           env_vars:
             - name: DOCKER_IMAGE
               value: confluentinc/cp-kcat
           commands:
-            - export OS_TYPE="ubi8"
+            - export OS_TYPE="ubi9"
             - export DOCKER_REPO="confluentinc/cp-kcat"
             - if [[ ! "$OS_TYPE" ]]; then export OS_TAG=""; elif [[ "$OS_TYPE" =~ $PROMOTE_OS_TYPE* ]]; then export OS_TAG="-$OS_TYPE"; fi
             - export INTERNAL_IMAGE_TAG="$BRANCH_TAG-$PACKAGING_BUILD_NUMBER$OS_TAG$ARM_ARCH"
@@ -133,12 +133,12 @@ blocks:
     dependencies: ["Promote AMD", "Promote ARM"]
     task:
       jobs:
-        - name: Create Manifest confluentinc/cp-kcat ubi8
+        - name: Create Manifest confluentinc/cp-kcat ubi9
           env_vars:
             - name: DOCKER_IMAGE
               value: confluentinc/cp-kcat
           commands:
-            - export OS_TYPE="ubi8"
+            - export OS_TYPE="ubi9"
             - if [[ ! "$OS_TYPE" ]]; then export OS_TAG=""; elif [[ "$OS_TYPE" =~ $PROMOTE_OS_TYPE* ]]; then export OS_TAG="-$OS_TYPE"; fi
             - export DOCKER_REPO="confluentinc/cp-kcat"
             - export PROMOTED_TAG="$PROMOTED_TAG_PREFIX$OS_TAG"
