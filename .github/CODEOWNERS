@@ -1,1 +1,3 @@
-*	@confluentinc/clients @confluentinc/cp-build-and-release-team
+*	@confluentinc/clients
+.semaphore/	@confluentinc/clients @confluentinc/cp-build-and-release-team
+service.yml	@confluentinc/clients @confluentinc/cp-build-and-release-team
