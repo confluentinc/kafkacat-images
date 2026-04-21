@@ -42,27 +42,29 @@
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <configuration>
                     <buildArgs>
-                        <UBI_MINIMAL_VERSION>${ubi9.minimal.image.version}</UBI_MINIMAL_VERSION>
+                        <UBI_MICRO_VERSION>${ubi9-micro.image.version}</UBI_MICRO_VERSION>
+                        <UBI9_VERSION>${ubi9.image.version}</UBI9_VERSION>
                     </buildArgs>
                 </configuration>
             </plugin>
 
             <plugin>
-            <groupId>io.fabric8</groupId>
-            <artifactId>docker-maven-plugin</artifactId>
-            <version>0.48.1</version>
-            <configuration>
-              <images>
-                <image>
-                  <build>
-                    <args>
-                      <UBI_MINIMAL_VERSION>${ubi9.minimal.image.version}</UBI_MINIMAL_VERSION>
-                    </args>
-                  </build>
-                </image>
-              </images>
-            </configuration>
-          </plugin>       
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.48.1</version>
+                <configuration>
+                    <images>
+                        <image>
+                            <build>
+                                <args>
+                                    <UBI_MICRO_VERSION>${ubi9-micro.image.version}</UBI_MICRO_VERSION>
+                                    <UBI9_VERSION>${ubi9.image.version}</UBI9_VERSION>
+                                </args>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>       
         </plugins>
     </build>
       
