@@ -38,31 +38,20 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <configuration>
-                    <buildArgs>
-                        <UBI_MINIMAL_VERSION>${ubi9.minimal.image.version}</UBI_MINIMAL_VERSION>
-                    </buildArgs>
-                </configuration>
-            </plugin>
-
-            <plugin>
             <groupId>io.fabric8</groupId>
             <artifactId>docker-maven-plugin</artifactId>
-            <version>0.48.1</version>
             <configuration>
               <images>
                 <image>
                   <build>
                     <args>
-                      <UBI_MINIMAL_VERSION>${ubi9.minimal.image.version}</UBI_MINIMAL_VERSION>
+                      <UBI_MINIMAL_VERSION>${ubi9-minimal.image.version}</UBI_MINIMAL_VERSION>
                     </args>
                   </build>
                 </image>
               </images>
             </configuration>
-          </plugin>       
+          </plugin>
         </plugins>
     </build>
       
