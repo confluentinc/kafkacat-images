@@ -1,3 +1,5 @@
+[![Try Confluent Cloud - The Data Streaming Platform](https://images.ctfassets.net/8vofjvai1hpv/10bgcSfn5MzmvS4nNqr94J/af43dd2336e3f9e0c0ca4feef4398f6f/confluent-banner-v2.svg)](https://confluent.cloud/signup?utm_source=github&utm_medium=banner&utm_campaign=oss-repos&utm_term=kafkacat-images)
+
 # Docker images for Kafkacat
 
 This repo provides build files for [kcat](https://docs.confluent.io/current/app-development/kafkacat-usage.html) Docker images.
