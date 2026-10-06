@@ -3,20 +3,17 @@ lang: unknown
 lang_version: unknown
 git:
   enable: true
-github:
-  enable: true
-  repo_name: confluentinc/kafkacat-images
 semaphore:
   enable: true
   pipeline_type: cp-dockerfile
-  docker_repos: ["confluentinc/cp-kcat",]
+  docker_repos: [confluentinc/cp-kcat]
   community_docker_repos: []
   community_maven_modules: []
-  maven_phase: 'package'
+  maven_phase: package
   maven_skip_deploy: true
   use_packages: true
   cp_images: true
-  os_types: ['ubi9']
+  os_types: [ubi9]
   nano_version: true
   build_arm: true
   sign_images: true
@@ -46,7 +43,7 @@ semaphore:
         - name: SKIP_COMMUNITY
           required: false
           default_value: 'False'
-          description: 'Skip building community docker images'
+          description: Skip building community docker images
           options:
             - 'True'
             - 'False'
@@ -66,12 +63,12 @@ semaphore:
         - name: PROMOTE_OS_TYPE
           required: true
           options:
-            - 'deb'
-            - 'ubi'
+            - deb
+            - ubi
         - name: SKIP_COMMUNITY
           required: false
           default_value: 'False'
-          description: 'Skip publishing community docker images'
+          description: Skip publishing community docker images
           options:
             - 'True'
             - 'False'
